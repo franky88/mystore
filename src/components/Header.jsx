@@ -3,7 +3,7 @@ import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
 const Header = () => {
-  let { user } = useContext(AuthContext)
+  let {user, logoutUser} = useContext(AuthContext)
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container">
@@ -18,7 +18,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               {user ? (
-                <Link className="nav-link" to="/logout" >Logout</Link>
+                <Link className="nav-link" onClick={logoutUser} to="/login" >Logout</Link>
               ) : (
                 <Link className="nav-link" to="/login" >Login</Link>
               )}

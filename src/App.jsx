@@ -1,29 +1,27 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import AuthContext, { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { AuthProvider } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
-import { useContext } from "react";
+import PrivateRoute from "./utils/PrivateRoute";
 
 const App = () => {
-  const autheticated = false;
-  const { user } = useContext(AuthContext)
   return (
-    <AuthProvider>
-      <Router>
-          <Header />
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-12">
-              <Routes>
-                <Route path="/" element={!user ? <Navigate to="/login" /> : <HomePage />} exact />
-                <Route path="/login" element={<LoginPage />} />
-              </Routes>
-              </div>
+    <Router>
+      <AuthProvider>
+        <Header />
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12">
+              <PrivateRoute path="/" exact>
+                <HomePage />
+              </PrivateRoute>
+              <Route component={LoginPage} path="/login"/>
             </div>
           </div>
-      </Router>
-    </AuthProvider>
+        </div>
+      </AuthProvider>
+    </Router>
   );
 };
 
